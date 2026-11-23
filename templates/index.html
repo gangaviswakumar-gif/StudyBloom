@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBloom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#"><span class="brand-mark">❀</span><span>StudyBloom</span></a>
+      <div class="today-label">✧ <span id="todayDate"></span></div>
+      <div class="top-note">one thing at a time <span>✿</span></div>
+    </header>
+
+    <main class="dashboard">
+      <section class="left-column">
+        <article class="card streak-card">
+          <div class="eyebrow"><span class="flame">♨</span> YOUR LITTLE STREAK</div>
+          <div class="streak-number"><span id="streakCount">0</span><small>days</small></div>
+          <p id="streakMessage">Your next one starts today.</p>
+        </article>
+
+        <article class="card note-card">
+          <div class="eyebrow"><span class="quote-icon">❞</span> A NOTE TO SELF</div>
+          <textarea id="dailyNote" maxlength="500" placeholder="Write a quote or little reminder..."></textarea>
+          <div class="note-bottom"><span>Just for today, just for you.</span><span>✎</span></div>
+        </article>
+      </section>
+
+      <section class="focus-column">
+        <p class="intro">A little space to focus</p>
+        <div class="clock-face" aria-label="Analogue clock">
+          <span class="clock-number n12">12</span><span class="clock-number n3">3</span>
+          <span class="clock-number n6">6</span><span class="clock-number n9">9</span>
+          <span class="hand hour-hand" id="hourHand"></span>
+          <span class="hand minute-hand" id="minuteHand"></span>
+          <span class="hand second-hand" id="secondHand"></span>
+          <span class="clock-pin"></span>
+        </div>
+        <div class="digital-time" id="digitalTime">--:--</div>
+        <p class="time-caption" id="timerCaption">Take a breath. You're right on time.</p>
+
+        <div class="focus-progress">
+          <div class="progress-label"><span>Today's focus</span><strong><span id="focusTime">0 min</span> / <span id="goalLabel">1 hr</span></strong></div>
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <div class="timer-controls">
+          <button class="btn btn-primary" id="timerButton">◴ &nbsp; Set a timer</button>
+          <button class="btn btn-light" id="goalButton">Set daily target</button>
+        </div>
+      </section>
+
+      <section class="card tasks-card">
+        <div class="task-topline">
+          <div class="eyebrow">☷ &nbsp; YOUR DAY</div>
+          <span class="task-count" id="taskCount">0</span>
+        </div>
+        <h2>Little to-dos</h2>
+        <form id="taskForm" class="task-entry">
+          <input id="taskInput" type="text" maxlength="160" placeholder="Add a little task..." autocomplete="off">
+          <button aria-label="Add task" type="submit">+</button>
+        </form>
+        <ul id="taskList" class="task-list"></ul>
+        <div id="emptyTasks" class="empty-state">
+          <span class="empty-icon">☷</span>
+          <strong>Your list is a little blank.</strong>
+          <p>Add something when you're ready.</p>
+        </div>
+      </section>
+    </main>
+    <footer>Made with a little patience and a lot of possibility ♡</footer>
+  </div>
+
+  <dialog id="timerDialog" class="modal">
+    <form method="dialog" class="modal-close"><button aria-label="Close">×</button></form>
+    <h3>Your focus session</h3>
+    <p>Choose a countdown, or use the stopwatch to track open-ended study time.</p>
+    <div class="mode-switch">
+      <button type="button" class="mode active" data-mode="countdown">Countdown</button>
+      <button type="button" class="mode" data-mode="stopwatch">Stopwatch</button>
+    </div>
+    <label id="minutesLabel">Minutes
+      <input id="timerMinutes" type="number" min="1" max="600" value="25">
+    </label>
+    <div class="modal-actions"><button type="button" class="btn btn-primary" id="startTimer">Start focusing</button></div>
+  </dialog>
+
+  <dialog id="activeDialog" class="modal">
+    <form method="dialog" class="modal-close"><button aria-label="Close">×</button></form>
+    <p class="eyebrow">YOUR FOCUS SESSION</p>
+    <div class="session-time" id="sessionDisplay">25:00</div>
+    <p id="sessionStatus">You're doing lovely. Keep going.</p>
+    <div class="modal-actions">
+      <button class="btn btn-light" id="pauseTimer" type="button">Pause</button>
+      <button class="btn btn-primary" id="stopTimer" type="button">Stop & save</button>
+    </div>
+  </dialog>
+
+  <dialog id="goalDialog" class="modal">
+    <form method="dialog" class="modal-close"><button aria-label="Close">×</button></form>
+    <h3>A gentle daily goal</h3>
+    <p>How much focused time would you like to aim for each day?</p>
+    <label>Hours
+      <input id="goalHours" type="number" min="0.25" max="24" step="0.25" value="1">
+    </label>
+    <div class="modal-actions"><button class="btn btn-primary" id="saveGoal" type="button">Save my goal</button></div>
+  </dialog>
+
+  <audio id="alarmSound" preload="auto">
+    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+  </audio>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
